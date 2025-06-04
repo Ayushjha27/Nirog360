@@ -7,6 +7,8 @@ import Login from './pages/Login/Login'
 import Stock from './pages/Stock/Stock'
 import AdminDashboard from './pages/Admin/Dashboard/AdminDashboard'
 import RegisterStudent from './pages/Admin/RegisterStudent/RegisterStudent'
+import ManageMedicine from './pages/Admin/ManageMedicine/ManageMedicine'
+import Record from './pages/Admin/Records/Record'
 function App() {
 
   return (
@@ -18,6 +20,8 @@ function App() {
          < Route path='/stock' element={<Stock/>}/ >
          < Route path='/admin/dashboard' element={<AdminDashboard/>}/ >
          < Route path='/admin/register-student' element={<RegisterStudent/>}/ >
+         < Route path='/admin/manage-medicine' element={<ManageMedicine/>}/ >
+         < Route path='/admin/record' element={<Record/>}/ >
 
       </Routes>
       <Footer/>
