@@ -66,13 +66,13 @@ const Record = () => {
     setSelectedMonth(pastAndCurrentMonths[pastAndCurrentMonths.length-1])
     
   },[])
-<<<<<<< HEAD
+
 
    const handleOnOpenModal = () =>{
     setModal(prev => !prev)
    }
-=======
->>>>>>> cee482845407e2a0b485c8bd5771a67cf0e25c81
+
+
   return (
     <div className='records'>
           <div className='go-back'><Link to={'/admin/dashboard'}><ArrowBackIcon /> Back To Dashboard</Link></div>
@@ -114,11 +114,11 @@ const Record = () => {
 
         <div className='report-form-row-block'>
         <div className='report-form-row'>
-<<<<<<< HEAD
+
              <div className='' onClick={()=>{handleOnOpenModal()}}><VisibilityIcon sx={{cursor:'pointer'}}/></div>
-=======
+
              <div className=''><VisibilityIcon sx={{cursor:'pointer'}}/></div>
->>>>>>> cee482845407e2a0b485c8bd5771a67cf0e25c81
+
              <div className='col-2-mng'>Shruti</div>
               <div className='col-2-mng'>93</div>     
             <div className='col-3-mng'>12-06-2025</div>     
@@ -134,14 +134,13 @@ const Record = () => {
 
         </div> 
          </div>
-<<<<<<< HEAD
+
          {
           modal &&  <Modal header="Records" handleClose={onOffModal} children={<RecordModal/>}/>
 
          }
-=======
        
->>>>>>> cee482845407e2a0b485c8bd5771a67cf0e25c81
+
     </div>
   )
 }
