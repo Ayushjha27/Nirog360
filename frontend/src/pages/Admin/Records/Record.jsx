@@ -23,13 +23,13 @@ const Record = () => {
 
     const [selectedYear, setSelectedYear] = useState("")
     const [selectedMonth, setSelectedMonth] = useState("")
-<<<<<<< HEAD
+
      const onOffModal = () =>{
        setModal(prev => !prev)
      }
-=======
 
->>>>>>> cee482845407e2a0b485c8bd5771a67cf0e25c81
+
+
      const onChangeField = (value) => {
         setStudentRoll(value)
     }
