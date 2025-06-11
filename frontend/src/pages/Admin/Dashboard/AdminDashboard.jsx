@@ -42,9 +42,9 @@ const AdminDashboard = () => {
         <Link to={'/admin/record'} className='admin-dashboard-card'>
           Records
         </Link>
-        <div className='admin-dashboard-card'>
+        <Link to={'/admin/facility'} className='admin-dashboard-card'>
           Facilities
-        </div>
+        </Link>
         <div className='admin-dashboard-card'>
           Near By Hospital
         </div>

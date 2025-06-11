@@ -9,6 +9,7 @@ import AdminDashboard from './pages/Admin/Dashboard/AdminDashboard'
 import RegisterStudent from './pages/Admin/RegisterStudent/RegisterStudent'
 import ManageMedicine from './pages/Admin/ManageMedicine/ManageMedicine'
 import Record from './pages/Admin/Records/Record'
+import Facility from './pages/Admin/Facility/Facility'
 function App() {
 
   return (
@@ -22,6 +23,7 @@ function App() {
          < Route path='/admin/register-student' element={<RegisterStudent/>}/ >
          < Route path='/admin/manage-medicine' element={<ManageMedicine/>}/ >
          < Route path='/admin/record' element={<Record/>}/ >
+         < Route path='/admin/facility' element={<Facility/>}/ >
 
       </Routes>
       <Footer/>
