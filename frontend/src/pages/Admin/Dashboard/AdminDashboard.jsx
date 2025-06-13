@@ -36,21 +36,21 @@ const AdminDashboard = () => {
         <Link to={'/admin/register-student'} className='admin-dashboard-card'>
           Register Student
         </Link>
-        <div className='admin-dashboard-card'>
+        <Link to={'/admin/manage-medicine'}className='admin-dashboard-card'>
           Manage Medicines
-        </div>
-        <div className='admin-dashboard-card'>
+        </Link>
+        <Link to={'/admin/record'} className='admin-dashboard-card'>
           Records
-        </div>
-        <div className='admin-dashboard-card'>
+        </Link>
+        <Link to={'/admin/facility'} className='admin-dashboard-card'>
           Facilities
-        </div>
-        <div className='admin-dashboard-card'>
+        </Link>
+        <Link to={'/admin/nearByHospital'} className='admin-dashboard-card'>
           Near By Hospital
-        </div>
-        <div className='admin-dashboard-card'>
+        </Link>
+        <Link to={'/admin/gallary'} className='admin-dashboard-card'>
           Gallary
-        </div>
+        </Link>
       </div>
       {manageStaffModal && <Modal value={"staff"} handleClose={openCloseModal}  header={"Manage Staffs"} children={<ManageStaff/>} />
       }

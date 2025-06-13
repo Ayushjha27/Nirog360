@@ -7,6 +7,11 @@ import Login from './pages/Login/Login'
 import Stock from './pages/Stock/Stock'
 import AdminDashboard from './pages/Admin/Dashboard/AdminDashboard'
 import RegisterStudent from './pages/Admin/RegisterStudent/RegisterStudent'
+import ManageMedicine from './pages/Admin/ManageMedicine/ManageMedicine'
+import Record from './pages/Admin/Records/Record'
+import Facility from './pages/Admin/Facility/Facility'
+import NearByHospital from './pages/Admin/NearByHospital/NearByHospital'
+import AdminGallary from './pages/Admin/Gallary/AdminGallary'
 function App() {
 
   return (
@@ -18,6 +23,11 @@ function App() {
          < Route path='/stock' element={<Stock/>}/ >
          < Route path='/admin/dashboard' element={<AdminDashboard/>}/ >
          < Route path='/admin/register-student' element={<RegisterStudent/>}/ >
+         < Route path='/admin/manage-medicine' element={<ManageMedicine/>}/ >
+         < Route path='/admin/record' element={<Record/>}/ >
+         < Route path='/admin/facility' element={<Facility/>}/ >
+         < Route path='/admin/nearByHospital' element={<NearByHospital/>}/ >
+         < Route path='/admin/gallary' element={<AdminGallary/>}/ >
 
       </Routes>
       <Footer/>
