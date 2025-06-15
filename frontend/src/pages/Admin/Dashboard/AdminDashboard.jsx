@@ -45,12 +45,12 @@ const AdminDashboard = () => {
         <Link to={'/admin/facility'} className='admin-dashboard-card'>
           Facilities
         </Link>
-        <div className='admin-dashboard-card'>
+        <Link to={'/admin/nearByHospital'} className='admin-dashboard-card'>
           Near By Hospital
-        </div>
-        <div className='admin-dashboard-card'>
+        </Link>
+        <Link to={'/admin/gallary'} className='admin-dashboard-card'>
           Gallary
-        </div>
+        </Link>
       </div>
       {manageStaffModal && <Modal value={"staff"} handleClose={openCloseModal}  header={"Manage Staffs"} children={<ManageStaff/>} />
       }
