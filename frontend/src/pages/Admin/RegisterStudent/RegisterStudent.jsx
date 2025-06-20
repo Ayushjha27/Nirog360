@@ -10,7 +10,12 @@ const RegisterStudent = () => {
     const [searchStudent, setSearchStudent] = useState("");
     const [reportModal, setReportModal] = useState(false)
 
+     const [studentDetail, setStudentDetail] = useState({ _id: "",email:"" ,name: "", roll: "", mobileNo: "", fatherName: "", fatherMobile: "", address: "", previous_health: "", age: "", bloodGroup: "" });
     
+    const handleOnChangeInputField = (event, key) => {
+        setStudentDetail({ ...studentDetail, [key]: event.target.value })
+    }
+
    
 
     const openCloseModal = ()=>{
@@ -39,34 +44,34 @@ const RegisterStudent = () => {
       <form className='register-form' onSubmit={handleSubmit}>
        <div className='register-form-div'>
        <div className='register-input-box'>
-         <input className='input-box-register' placeholder='Student Name' type="text" />
+         <input value={studentDetail.name} onChange={(event)=>handleOnChangeInputField(event,"name")} className='input-box-register' placeholder='Student Name' type="text" />
        </div>
        <div className='register-input-box'>
-         <input className='input-box-register' placeholder='Email' type="text" />
+         <input value={studentDetail.email} onChange={(event)=>handleOnChangeInputField(event,"email")}className='input-box-register' placeholder='Email' type="email" />
        </div>
        <div className='register-input-box'>
-         <input className='input-box-register' placeholder='Roll No' type="email" />
+         <input value={studentDetail.roll} onChange={(event)=>handleOnChangeInputField(event,"roll")} className='input-box-register' placeholder='Roll No' type="text" />
        </div>
        <div className='register-input-box'>
-         <input className='input-box-register' placeholder='Mobile No' type="number" />
+         <input value={studentDetail.mobileNo} onChange={(event)=>handleOnChangeInputField(event,"mobileNo")}className='input-box-register' placeholder='Mobile No' type="number" />
        </div>
        <div className='register-input-box'>
-         <input className='input-box-register' placeholder='Father Name' type="text" />
+         <input value={studentDetail.fatherName} onChange={(event)=>handleOnChangeInputField(event,"fatherName")} className='input-box-register' placeholder='Father Name' type="text" />
        </div>
        <div className='register-input-box'>
-         <input className='input-box-register' placeholder='Father Mobile No' type="number" />
+         <input value={studentDetail.fatherMobile} onChange={(event)=>handleOnChangeInputField(event,"fatherMobile")} className='input-box-register' placeholder='Father Mobile No' type="number" />
        </div>
        <div className='register-input-box'>
-         <input className='input-box-register' placeholder='Address' type="text" />
+         <input value={studentDetail.address} onChange={(event)=>handleOnChangeInputField(event,"address")} className='input-box-register' placeholder='Address' type="text" />
        </div>
        <div className='register-input-box'>
-         <input className='input-box-register' placeholder='Previous health issue' type="text" />
+         <input value={studentDetail.previous_health} onChange={(event)=>handleOnChangeInputField(event,"previous_health")} className='input-box-register' placeholder='Previous health issue' type="text" />
        </div>
         <div className='register-input-box'>
-         <input className='input-box-register' placeholder='Age' type="number" />
+         <input value={studentDetail.age} onChange={(event)=>handleOnChangeInputField(event,"age")} className='input-box-register' placeholder='Age' type="number" />
        </div>
         <div className='register-input-box'>
-         <input className='input-box-register' placeholder='Blood Group' type="text" />
+         <input value={studentDetail.bloodGroup} onChange={(event)=>handleOnChangeInputField(event,"bloodGroup")}className='input-box-register' placeholder='Blood Group' type="text" />
        </div>
        </div>
        <button type="submit" className='form-btn reg-btn'>Register</button>
