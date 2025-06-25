@@ -1,0 +1,186 @@
+const UserModels = require('../Models/user');
+const bcryptjs = require("bcryptjs")
+const jwt = require("jsonwebtoken")
+const crypto = require("crypto")
+const nodemailer = require('nodemailer');
+
+const cookieOptions = {
+    httpOnly: true,
+    secure: false, // Set to true in production
+    sameSite: 'Lax'
+
+};
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASSWORD
+    }
+});
+
+exports.register = async(req,res)=>{
+    try {
+        const {name, email, password, roll} = req.body;
+        const isExist = await UserModels.findOne({ email });
+
+        if(isExist){
+            return res.status(400).json({
+                error:"Already have an account with this email or roll"
+            });
+        }
+         const hashedPassword = await bcryptjs.hash(password,10);
+         
+        const user = new UserModels({name,email,roll,password : hashedPassword});
+        await user.save();
+
+        res.status(201).json({
+            message:"User registered successfully",
+            success:"yes",
+            data:user
+        });
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            error:"Something Went Wrong",
+            issue:err.message
+        })
+    }
+}
+
+
+exports.login = async(req,res)=>{
+    try {
+        const {email,password} = req.body;
+        const isExist = await UserModels.findOne({ email });
+        // console.log(isExist)
+        if(isExist && bcryptjs.compare(password, isExist.password)){
+            
+            const token = jwt.sign({userId: isExist._id},'Its_My_Secret_Key');
+            res.cookie('token',token,cookieOptions)
+            return res.status(200).json({
+                message:"Logged in successfully",
+                success:"true",
+                user : isExist,
+                token
+            })
+        }else{
+            return res.status(400).json({
+                error:"Invalid credentials"
+            });
+        }
+    } catch (err) {
+         console.log(err)
+        res.status(500).json({
+            error:"Something Went Wrong",
+            issue:err.message
+        })
+        
+    }
+}
+
+
+
+exports.sendOtp =  async(req,res)=>{
+    try {
+        const {email} = req.body;
+        const user = await UserModels.findOne({email});
+
+        if(!user){
+            return res.status(400).json({
+                error:'User not found'
+            });
+        }
+
+        const buffer = crypto.randomBytes(4);
+        const token = buffer.readUint32BE(0)% 900000 + 100000;
+        
+        user.resetPasswordToken = token;
+        user.resetPasswordExpires = Date.now() + 3600000;
+
+        await user.save();
+
+        const mailOptions = {
+            from: process.env.EMAIL,
+            to:email,
+            subject:'Password Reset',
+            text:`You requested a password reset. Your OTP is: ${token}`
+        };
+
+       transporter.sendMail(mailOptions,(error,info)=>{
+         if(error){
+            res.status(500).json({
+                error:'Server error',
+                errorMsg: error
+            });
+         }
+         else{
+            res.status(200).json({
+                message:"OTP Sent to your email"
+            })
+         }
+       }); 
+
+    } catch (err) {
+       console.log(err)
+        res.status(500).json({
+            error:"Something Went Wrong",
+            issue:err.message
+        }) 
+    }
+}
+
+exports.verifyOtp = async(req,res)=>{
+    try {
+        const {otp,email} = req.body;
+        const user = await UserModels.findOne({
+            email,
+            resetPasswordToken:otp,
+            resetPasswordExpires:{$gt:Date.now()}
+        });
+      if(!user){
+        return res.status(400).json({
+            error:"Opt is invalid or has expired, Please Try Again."
+        });
+      }
+
+      res.status(200).json({
+        message:"OTP is Successfully Verified"
+      })
+
+    } catch (err) {
+       console.log(err)
+        res.status(500).json({
+            error:"Something Went Wrong",
+            issue:err.message
+        })  
+    }
+}
+
+exports.resetPassword = async(req,res)=>{
+  try {
+    const {email, newPassword} = req.body;
+    const user = await UserModels.findOne({email});
+    if(!user){
+        return res.status(400).json({
+            error:"Some Technical Issue, Please try again later"
+        });
+        
+    }
+    let updatedPassword = await bcryptjs.hash(newPassword,10);
+    user.password = updatedPassword;
+    user.resetPasswordExpires = undefined;
+    user.resetPasswordToken = undefined;
+
+    await user.save();
+    res.status(200).json({
+        message:"Password Reset Successfully"
+    })
+  } catch (err) {
+    console.log(err)
+        res.status(500).json({
+            error:"Something Went Wrong",
+            issue:err.message
+        })  
+  }  
+}
