@@ -1,14 +1,20 @@
 const express = require("express");
 const app = express();
+const cookieparser = require('cookie-parser')
+
+require('dotenv').config({path:"./.env"})
 
 app.use(express.json())
+app.use(cookieparser())
 require('./connection')
-app.get('/',(req,res)=>{
-    res.send({message:"Successfully Running"})
-})
 
-app.listen(4000,()=>{
-    console.log("Successfully running on port 4000")
+
+const userRoutes = require('./Routes/user');
+app.use("/api/auth",userRoutes);
+
+
+app.listen(process.env.PORT,()=>{
+    console.log("Successfully running on port",process.env.PORT)
 })
 
 //projectas7447
