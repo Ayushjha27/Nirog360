@@ -184,3 +184,100 @@ exports.resetPassword = async(req,res)=>{
         })  
   }  
 }
+
+exports.updateStudentById = async(req,res)=>{
+    try {
+       const {id} = req.params;
+       const updateStudent = await UserModels.findByIdAndUpdate(id,req.body,{new:true});
+       
+       if(updateStudent){
+        return res.status(200).json({
+            message:"Staff Update Successfully"
+        })
+       }
+       return res.status(400).json({
+        error:"No Such student is there"
+       })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            error:"Something Went Wrong",
+            issue:err.message
+        })
+    }
+
+
+}
+
+exports.getStudentByRollNo = async(req,res)=>{
+    try {
+        const {roll} = req.params;
+        const student = await UserModels.findOne({roll});
+
+        if(student){
+            return res.status(200).json({
+                message:"Student fetched Successfully",
+                student
+            });
+
+        }
+        return res.status(400).json({
+            error:"No Such Student is there"
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            error:"Something Went Wrong",
+            issue:err.message
+        }) 
+    }
+}
+//Staff ke pas koi student aya register phli bar krwane to admin account se us email me ek auto generated password student ke email me jayega
+exports.registerStudentByStaff = async(req,res)=>{
+    try {
+        const buffer = crypto.randomBytes(4); //Get random bytes
+        let token = buffer.readUInt32BE(0)% 900000 + 100000; //Modulo to get a 6-digit number
+        let {_id,...body} = req.body;
+
+        const isExist = await UserModels.findOne({email: body.email});
+        if(isExist){
+            return res.status(400).json({
+                error:"Already have an account with this email"
+            });
+        }
+
+        token = token.toString();
+        let updatedPass = await bcryptjs.hash(token,10);
+
+        const user = new UserModels({...body, password:updatedPass});
+
+        user.save();
+
+        const mailOptions = {
+            from: process.env.EMAIL,
+            to:body.email,
+            subject:'Password for MNNIT Dispensary System',
+            text:`Hi, Your password for MNNIT Dispensary System is : ${token} whose email id is registered email id ${body.email}`
+        };
+
+       transporter.sendMail(mailOptions,(error,info)=>{
+         if(error){
+            res.status(500).json({
+                error:'Server error',
+                errorMsg: error
+            });
+         }
+         else{
+            res.status(200).json({
+                message:"Password Sent to your student email"
+            })
+         }
+       }); 
+    } catch (err) {
+       console.log(err)
+        res.status(500).json({
+            error:"Something Went Wrong",
+            issue:err.message
+        })  
+    }
+}
