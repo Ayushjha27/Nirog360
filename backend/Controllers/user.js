@@ -281,3 +281,119 @@ exports.registerStudentByStaff = async(req,res)=>{
         })  
     }
 }
+
+exports.addStaffsByAdmin = async(req,res)=>{
+   try {
+     const {name, email, password, designation, mobileNo} = req.body;
+     const searchStaff = await UserModels.findOne({email});
+
+     if(searchStaff){
+        return res.status(400).json({
+            error:"Alreaddy have an account with this email id."
+        })
+     }
+     let updatedPass = await bcryptjs.hash(password,10);
+     const user = new UserModels({name, email, designation, mobileNo, password: updatedPass,role:"staff"});
+
+     await user.save();
+
+     const mailOptions = {
+            from: process.env.EMAIL,
+            to:email,
+            subject:'Password for MNNIT Dispensary System',
+            text:`Hi, Your password for MNNIT Dispensary System is : ${password} whose email id is registered email id ${email} for Staff Portal`
+        };
+       //promise->reject,resolve
+       transporter.sendMail(mailOptions,(error,info)=>{
+         if(error){
+            res.status(500).json({
+                error:'Server error',
+                errorMsg: error
+            });
+         }
+         else{
+            res.status(200).json({
+                message:"Password Sent to your staff's email"
+            })
+         }
+       });
+   } catch (err) {
+    console.log(err)
+        res.status(500).json({
+            error:"Something Went Wrong",
+            issue:err.message
+        })  
+   } 
+}
+
+exports.updateStaffById = async(req,res)=>{
+    try {
+        const {id} = req.params;
+        const {name, designation, mobileNo} = req.body;
+        const staff = await UserModels.findById(id);
+        if(staff){
+            staff.name = name;
+            staff.designation = designation;
+            staff.mobileNo = mobileNo;
+
+            await staff.save();
+            return res.status(200).json({
+                message:"Successfully Updated"
+            });
+        }else{
+            return res.status(400).json({
+                error:"No such staff exists"
+            })
+        }
+    } catch (err) {
+       console.log(err)
+        res.status(500).json({
+            error:"Something Went Wrong",
+            issue:err.message
+        })   
+    }
+}
+
+exports.deleteStaff = async(req,res)=>{
+    try {
+        const {id} = req.params;
+        const deleteUser= await UserModels.findByIdAndDelete(id);
+        if(deleteUser){
+            
+            return res.status(200).json({
+                message:"Staff deleted successsfully"
+            })
+        }else{
+            return res.status(400).json({
+                error:"No such staff exists"
+            })
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({
+            error:"Something Went Wrong",
+            issue:err.message
+        })  
+    }
+}
+
+exports.getAllStaffs = async(req,res)=>{
+   try {
+    const staffs = await UserModels.find({role:"staff"});
+    return res.status(200).json({
+        staffs
+    })
+   } catch (err) {
+     console.log(err)
+        res.status(500).json({
+            error:"Something Went Wrong",
+            issue:err.message
+        })  
+   } 
+}
+
+exports.logout = async(req,res)=>{
+    res.clearCookie('token',cookieOptions).json({
+        message:"Logged out successfully"
+    })
+}
