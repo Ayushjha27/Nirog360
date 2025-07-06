@@ -1,9 +1,16 @@
 const express = require("express");
+
 const router = express.Router();
+
 const Authentication = require('../Authentication/auth');
+
 const NotificationController = require("../Controllers/notification");
 
+
 router.post("/add",Authentication.adminFacultyAuth,NotificationController.addNotification);
+
 router.get("/get",NotificationController.getNotification)
+
 router.delete("/delete/:id",Authentication.adminFacultyAuth,NotificationController.deleteNotification)
+
 module.exports = router;
