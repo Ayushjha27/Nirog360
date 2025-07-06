@@ -119,6 +119,10 @@ const Header = (props) => {
           </div>
         </div>
 
+        <div className="website-name">
+          Nirog<span className="highlight-360">360</span>
+        </div>
+
 
 
 
@@ -198,7 +202,7 @@ const Header = (props) => {
 
         </div>
       }
-      
+
       <ToastContainer />
     </div>
   )

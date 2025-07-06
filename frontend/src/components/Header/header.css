@@ -8,7 +8,7 @@
   box-sizing: border-box;
 }
 
-.header-college-details {
+/* .header-college-details {
   display: flex;
 
   justify-content: space-between;
@@ -16,7 +16,16 @@
   padding: 5px 10px;
 
   border-top: 3px #eaa12c;
+} */
+ .header-college-details {
+  position: relative; /* add this */
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 10px;
+  border-top: 3px #eaa12c solid;
+  align-items: center; /* vertically center content */
 }
+
 
 .header-college-details-left {
   display: flex;
@@ -127,3 +136,37 @@
 .active-link {
   background-color: #2c98dc;
 }
+.website-name {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 25px;
+
+  font-size: 32px;
+  font-weight: 800;
+  font-family: 'Poppins', 'Segoe UI', 'Gill Sans', 'Gill Sans MT', Calibri, sans-serif;
+  color: #1e3a5f;  /* deep blue color for Aarogyam */
+
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  user-select: none;
+  cursor: default;
+  white-space: nowrap;
+
+  padding: 6px 20px;
+  border: 2px solid #e4680f;  /* orange border */
+  border-radius: 8px;
+  background-color: #fdf5e6;  /* light background */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.highlight-360 {
+  color: #e4680f;  /* vibrant orange */
+  font-weight: 900;
+  font-family: 'Montserrat', 'Segoe UI', sans-serif;
+  margin-left: 4px;
+  font-size: 24px;  /* smaller than Aarogyam's 32px */
+  vertical-align: middle; /* aligns better with Aarogyam */
+}
+
+

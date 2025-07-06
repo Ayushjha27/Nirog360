@@ -2,7 +2,9 @@ import React,{useState,useEffect}from 'react'
 
 import './Home.css'
 
-import HomeIcon from '@mui/icons-material/Home'
+import HomeIcon from '@mui/icons-material/Home';
+
+import DashboardIcon from '@mui/icons-material/Dashboard';
 
 import GroupIcon from '@mui/icons-material/Group';
 
@@ -22,6 +24,9 @@ import NearByHospital from './../../components/NearByHospitals/NearByHospital';
 
 import Gallary from '../../components/Gallary/Gallary';
 
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
+import {Link} from 'react-router-dom';
 
 
 const Home = (props) => {
@@ -30,6 +35,7 @@ const Home = (props) => {
 
     let [rightSideHeader, setRightSideHeader] = useState("About Us");
 
+      let userInfo = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : null;
 
      const handleChangeTab = (pagename) => {
 
@@ -102,6 +108,20 @@ const Home = (props) => {
       <div className='home-block'>
 
        <div className='home-left-page'>
+        {
+          userInfo?.role === 'admin' &&
+          <Link to={'/admin/dashboard'} className={`home-left-option`} >
+         <DashboardIcon/> Dashboard
+        </Link>
+        }
+        {
+          userInfo?.role === 'student' &&
+          <Link to={`/student/${userInfo._id}`} className={`home-left-option`} >
+         <AccountCircleIcon/> Profile
+        </Link>
+        }
+
+        
 
         <div className={`home-left-option ${page==="About"? "active-opt" :null}`} onClick={()=>{handleChangeTab("About")}}>
          <HomeIcon/> About Us

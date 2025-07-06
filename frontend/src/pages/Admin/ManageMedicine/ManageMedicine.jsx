@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import './ManageMedicine.css'
 
@@ -16,7 +16,10 @@ import Modal from './../../../components/Modal/Modal';
 
 import MedicineModal from './MedicineModal/MedicineModal';
 
-const ManageMedicine = () => {
+import axios from 'axios'
+import { ToastContainer,toast } from 'react-toastify';
+
+const ManageMedicine = (props) => {
 
   const [medicineSearch, setMedicineSearch] = useState("")
   const [addModal, setAddModal] = useState(false);
@@ -38,7 +41,42 @@ const ManageMedicine = () => {
     setMedicineSearch(value)
   }
 
+   const fetchData = async()=>{
+     props.showLoader();
+     await axios.get(`http://localhost:4000/api/medicine/search-by-name?name=${medicineSearch}`).then((response)=>{
+      // console.log(response)
+      setData(response.data.medicines)
+     }).catch(err => {
+            console.log(err);
+        }).finally(() => {
+            props.hideLoader();
+        })
+   }
+   useEffect(()=>{
+     fetchData();
+   },[medicineSearch]);
 
+   const handleEdit = (item)=>{
+     setClickedMedicine(item)
+     setAddModal(true)
+   }
+   
+  const filterOutMedicine = (id)=>{
+     let newArr = data.filter((item)=>item._id !== id);
+     setData(newArr)
+  }
+
+   const handleDelete = async(id)=>{
+    props.showLoader();
+    await axios.delete(`http://localhost:4000/api/medicine/delete/${id}`,{withCredentials:true}).then((res)=>{
+      filterOutMedicine(id)
+    }).catch(err => {
+          console.log(err);
+          toast.error(err?.response?.data?.error);
+        }).finally(() => {
+          props.hideLoader();
+        })
+   }
   return (
 
     <div className='manageMedicine'>
@@ -69,23 +107,32 @@ const ManageMedicine = () => {
 
           <div className='report-form-row-block'>
 
-            <div className='report-form-row'>
+            {
+              data.map((item,index)=>{
+                return(
+                <div className='report-form-row'>
 
-              <div className=''>2</div>
+              <div className=''>{index+1}</div>
 
-              <div className='col-2-mng'>Paracetamol</div>
-              <div className='col-2-mng'>Shruti</div>
-              <div className='col-3-mng'>12</div>
-              <div className='edit-icon'><EditIcon /></div>
-              <div className='delete-icon'><DeleteIcon /></div>
+              <div className='col-2-mng'>{item.name}</div>
+              <div className='col-2-mng'>{item?.addedBy?.name} </div>
+              <div className='col-3-mng'>{item.quantity}</div>
+              <div onClick={()=>handleEdit(item)} className='edit-icon'><EditIcon /></div>
+              <div onClick={()=>handleDelete(item._id)} className='delete-icon'><DeleteIcon /></div>
 
             </div>
+                );
+              })
+            }
 
-            <div className='report-form-row'>
+            {
+              (data.length===0) &&
+              <div className='report-form-row'>
 
               <div className=''>No Any Mediicine Yet!</div>
 
-            </div>
+               </div>
+            }
 
           </div>
 
@@ -94,9 +141,10 @@ const ManageMedicine = () => {
 
 
       {
-        addModal && <Modal header="Add Medicine" handleClose={onOffmodal} children={<MedicineModal />} />
+        addModal && <Modal header="Add Medicine" handleClose={onOffmodal}  children={<MedicineModal clickedMedicine={clickedMedicine} showLoader={props.showLoader} hideLoader={props.hideLoader}/>} />
 
       }
+      <ToastContainer/>
     </div>
 
   )
