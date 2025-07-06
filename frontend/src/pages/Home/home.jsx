@@ -10,7 +10,7 @@ import Staff from '../../components/Staffs/Staff';
 import Facility from '../../components/Facilities/Facility';
 import NearByHospital from './../../components/NearByHospitals/NearByHospital';
 import Gallary from '../../components/Gallary/Gallary';
-const Home = () => {
+const Home = (props) => {
   const [page, setPage] = useState("About")
     let [rightSideHeader, setRightSideHeader] = useState("About Us");
 
@@ -41,16 +41,16 @@ const Home = () => {
                 return <AboutUs />;
                
             case "Staff":
-                return <Staff/>;
+                return <Staff showLoader={props.showLoader} hideLoader={props.hideLoader}/>;
                 
              case "Facilities":
-                return <Facility/>;
+                return <Facility showLoader={props.showLoader} hideLoader={props.hideLoader}/>;
                
             case "NearByHospitals":
-                return <NearByHospital/>;
+                return <NearByHospital showLoader={props.showLoader} hideLoader={props.hideLoader}/>;
             
             case "Gallary":
-                return <Gallary />
+                return <Gallary showLoader={props.showLoader} hideLoader={props.hideLoader}/>
 
             default:
                 return null;

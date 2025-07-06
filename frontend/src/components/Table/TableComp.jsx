@@ -66,7 +66,9 @@ const TableComp = (props) => {
             })
            }
 
-          
+          {
+            props.data.length === 0? <StyledTableRow><StyledTableCell colSpan={props.header.length}>No Any Data Yet!</StyledTableCell></StyledTableRow>:null
+          }
         </TableBody>
       </Table>
     </TableContainer>

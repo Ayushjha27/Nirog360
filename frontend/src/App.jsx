@@ -13,27 +13,41 @@ import Facility from './pages/Admin/Facility/Facility'
 import NearByHospital from './pages/Admin/NearByHospital/NearByHospital'
 import AdminGallary from './pages/Admin/Gallary/AdminGallary'
 import StudentDashboard from './pages/Students/StudentDashboard'
+import GlobalLoader from './components/GlobalLoader/GlobalLoader'
+import { useState } from 'react'
 function App() {
-
+  const [loader,setLoader] = useState(false);
+  const [isLogin,setIsLogin] = useState(localStorage.getItem("isLogin"));
+  
+  const handleLogin=(value)=>{
+    setIsLogin(value)
+  }
+  const showLoader = ()=>{
+    setLoader(true);
+  }
+  const hideLoader = () =>{
+    setLoader(false);
+  }
   return (
     <div className='App'>
-      <Header/>
+      <Header isLogin={isLogin} handleLogin={handleLogin} showLoader={showLoader} hideLoader={hideLoader}/>
       <Routes>
-        < Route path='/' element={<Home/>}/ >
-         < Route path='/login' element={<Login/>}/ >
-         < Route path='/stock' element={<Stock/>}/ >
-         < Route path='/admin/dashboard' element={<AdminDashboard/>}/ >
-         < Route path='/admin/register-student' element={<RegisterStudent/>}/ >
-         < Route path='/admin/manage-medicine' element={<ManageMedicine/>}/ >
-         < Route path='/admin/record' element={<Record/>}/ >
-         < Route path='/admin/facility' element={<Facility/>}/ >
-         < Route path='/admin/nearByHospital' element={<NearByHospital/>}/ >
-         < Route path='/admin/gallary' element={<AdminGallary/>}/ >
+        < Route path='/' element={<Home showLoader={showLoader} hideLoader={hideLoader}/>}/ >
+         < Route path='/login' element={<Login handleLogin={handleLogin} showLoader={showLoader} hideLoader={hideLoader}/>}/ >
+         < Route path='/stock' element={<Stock showLoader={showLoader} hideLoader={hideLoader}/>}/ >
+         < Route path='/admin/dashboard' element={<AdminDashboard showLoader={showLoader} hideLoader={hideLoader}/>}/ >
+         < Route path='/admin/register-student' element={<RegisterStudent showLoader={showLoader} hideLoader={hideLoader}/>}/ >
+         < Route path='/admin/manage-medicine' element={<ManageMedicine showLoader={showLoader} hideLoader={hideLoader}/>}/ >
+         < Route path='/admin/record' element={<Record showLoader={showLoader} hideLoader={hideLoader}/>}/ >
+         < Route path='/admin/facility' element={<Facility showLoader={showLoader} hideLoader={hideLoader}/>}/ >
+         < Route path='/admin/nearByHospital' element={<NearByHospital showLoader={showLoader} hideLoader={hideLoader}/>}/ >
+         < Route path='/admin/gallary' element={<AdminGallary showLoader={showLoader} hideLoader={hideLoader}/>}/ >
 
          < Route path='/student/:id' element={<StudentDashboard/>}/ >
 
       </Routes>
       <Footer/>
+     { loader && <GlobalLoader /> } 
     </div>
   )
 }

@@ -4,7 +4,8 @@ import Modal from '../../../components/Modal/Modal';
 import ManageStaff from './ManageStaff/ManageStaff';
 import ManageEvent from './ManageEvent/ManageEvent';
 import { Link } from 'react-router-dom';
-const AdminDashboard = () => {
+import { ToastContainer,toast } from 'react-toastify';
+const AdminDashboard = (props) => {
   const [manageStaffModal,setManageStaffModal] = useState(false);
   const [eventModal,setEventModal] = useState(false)
   const openCloseModal = (value) =>{
@@ -16,6 +17,9 @@ const AdminDashboard = () => {
     }
 
   }
+
+  let userInfo = localStorage.getItem("userInfo")? JSON.parse(localStorage.getItem("userInfo")):null;
+
   return (
     <div className='adminDashboard'>
       <div className='welcome-header'>
@@ -23,9 +27,11 @@ const AdminDashboard = () => {
         Welcome To Admin Panel
        </div>
        <div className='welcome-admin-right-side'>
+        {(userInfo?.role === "admin")&& 
         <div className='manage-staff-btn' onClick={()=>{openCloseModal("staff")}}>
          Manage Staffs
         </div>
+         }
         <div className='manage-staff-btn' onClick={()=>{openCloseModal("event")}}>
          Events
         </div>
@@ -52,9 +58,9 @@ const AdminDashboard = () => {
           Gallary
         </Link>
       </div>
-      {manageStaffModal && <Modal value={"staff"} handleClose={openCloseModal}  header={"Manage Staffs"} children={<ManageStaff/>} />
+      {manageStaffModal && <Modal value={"staff"} handleClose={openCloseModal}  header={"Manage Staffs"} children={<ManageStaff showLoader={props.showLoader} hideLoader={props.hideLoader}/> }  />
       }
-      {eventModal && <Modal  value={"event"} handleClose={openCloseModal} header={"Manage Events"} children={<ManageEvent/>}/>}
+      {eventModal && <Modal  value={"event"} handleClose={openCloseModal} header={"Manage Events"} children={<ManageEvent showLoader={props.showLoader} hideLoader={props.hideLoader}/>} />}
       </div>
   )
 }
