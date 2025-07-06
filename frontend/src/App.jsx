@@ -17,15 +17,13 @@ import GlobalLoader from './components/GlobalLoader/GlobalLoader'
 import { useState } from 'react'
 function App() {
   const [loader,setLoader] = useState(false);
-<<<<<<< HEAD
+
   const [isLogin,setIsLogin] = useState(localStorage.getItem("isLogin"));
   
   const handleLogin=(value)=>{
     setIsLogin(value)
   }
-=======
 
->>>>>>> 5a9308c8b0b95486eabae796a39c806e0937989a
   const showLoader = ()=>{
     setLoader(true);
   }
@@ -37,11 +35,8 @@ function App() {
       <Header isLogin={isLogin} handleLogin={handleLogin} showLoader={showLoader} hideLoader={hideLoader}/>
       <Routes>
         < Route path='/' element={<Home showLoader={showLoader} hideLoader={hideLoader}/>}/ >
-<<<<<<< HEAD
          < Route path='/login' element={<Login handleLogin={handleLogin} showLoader={showLoader} hideLoader={hideLoader}/>}/ >
-=======
          < Route path='/login' element={<Login showLoader={showLoader} hideLoader={hideLoader}/>}/ >
->>>>>>> 5a9308c8b0b95486eabae796a39c806e0937989a
          < Route path='/stock' element={<Stock showLoader={showLoader} hideLoader={hideLoader}/>}/ >
          < Route path='/admin/dashboard' element={<AdminDashboard showLoader={showLoader} hideLoader={hideLoader}/>}/ >
          < Route path='/admin/register-student' element={<RegisterStudent showLoader={showLoader} hideLoader={hideLoader}/>}/ >
