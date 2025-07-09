@@ -2,6 +2,7 @@
 .gallary-admin{
 
     padding: 60px 100px;
+    /* display: flex; */
 
 }
 
@@ -37,4 +38,7 @@
         
     }
     
+}
+.gallary-home{
+    display: flex;
 }

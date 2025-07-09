@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import './NearByHospital.css'
 
@@ -14,75 +14,127 @@ import Modal from '../../../components/Modal/Modal';
 
 import NearByModal from './NearByModal/NearByModal';
 
-const NearByHospital = () => {
 
-   const [modal, setModal] = useState(false)
+import axios from 'axios';
 
-    const [data, setData] = useState([]);
+import { ToastContainer, toast } from 'react-toastify';
 
-    const [clickedItem, setClickedItem] = useState(null)
+const NearByHospital = (props) => {
+
+  const [modal, setModal] = useState(false)
+
+  const [data, setData] = useState([]);
+
+  const [clickedItem, setClickedItem] = useState(null)
 
 
-    const onOFModal = () => {
+  const onOFModal = () => {
 
-        if (modal) {
+    if (modal) {
 
-            setClickedItem(null)
-        }
-
-        setModal(prev => !prev)
+      setClickedItem(null)
     }
 
+    setModal(prev => !prev)
+  }
 
+  const handleEdit = (item) => {
+    setClickedItem(item);
+    setModal(true)
+  }
+
+     const filterOutData = (id) => {
+      let newArrr = data.filter((item) => item._id !== id);
+      setData(newArrr)
+  }
+
+  const handleDelete = async (id) => {
+    props.showLoader();
+    await axios.delete(`http://localhost:4000/api/hospital/delete/${id}`, { withCredentials: true }).then((res) => {
+     filterOutData(id);
+    }).catch(err => {
+      console.log(err);
+      toast.error(err?.response?.data?.error);
+    }).finally(() => {
+      props.hideLoader();
+    })
+
+  }
+  const fetchData = async () => {
+
+    props.showLoader();
+
+    await axios.get("http://localhost:4000/api/hospital/get").then((response) => {
+      console.log(response);
+      setData(response.data.hospitals)
+
+    }).catch(err => {
+      console.log(err);
+
+    }).finally(() => {
+      props.hideLoader();
+
+    })
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   return (
 
-       <div className='admin-facility'>
+    <div className='admin-facility'>
 
-    <div className='go-back'><Link to={'/admin/dashboard'}><ArrowBackIcon /> Back To Dashboard</Link></div>
-    
-
-    <div className='admin-facility-header'>
-
-       <div>Near By Hospital</div>
-
-       <div className='add-facility-btn' onClick={onOFModal}>Add</div>
-
-    </div>
-
-    <div className='admin-facility-rows'>
-
-    <div className='admin-facility-row'>
+      <div className='go-back'><Link to={'/admin/dashboard'}><ArrowBackIcon /> Back To Dashboard</Link></div>
 
 
-   <div className='admin-facility-left'>
+      <div className='admin-facility-header'>
 
-   <div className='admin-facility-title'>Name</div>
+        <div>Near By Hospital</div>
 
-   <div>Address: Delhi</div>
+        <div className='add-facility-btn' onClick={onOFModal}>Add</div>
 
-   <div>+91 226542452</div>
+      </div>
 
-   <div style={{marginTop: "10px"}}>Added By: Shruti</div>
-
-   </div>
-
-    
-    <div className='admin-facility-btns'>
-
-      <div><EditIcon/></div>
-
-      <div><DeleteIcon /></div>
-
-    </div>
+      <div className='admin-facility-rows'>
+        {
+          data.map((item) => {
+            return (
+              <div className='admin-facility-row' key={item._id}>
 
 
-    </div>
+                <div className='admin-facility-left'>
 
-    </div>
+                  <div className='admin-facility-title'>{item.name}</div>
 
-    {modal && <Modal headers="Add Facility" handleClose={onOFModal} children={<NearByModal clickedItem={clickedItem} />} />}
+                  <div>Address: {item.address}</div>
 
+                  <div>+91 {item.contact}</div>
+
+                  <div style={{ marginTop: "10px" }}>Added By: {item?.addedBy?.name}</div>
+
+                </div>
+
+
+                <div className='admin-facility-btns'>
+
+                  <div onClick={() => { handleEdit(item) }}><EditIcon /></div>
+
+                  <div onClick={() => { handleDelete(item._id) }} ><DeleteIcon /></div>
+
+                </div>
+
+
+              </div>
+
+            );
+          })
+        }
+
+      </div>
+
+      {modal && <Modal headers="Add Facility" handleClose={onOFModal} children={<NearByModal clickedItem={clickedItem} />} />}
+      <ToastContainer />
     </div>
 
   )

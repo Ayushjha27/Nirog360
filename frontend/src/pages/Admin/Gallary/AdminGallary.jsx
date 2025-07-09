@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import './AdminGallary.css'
 
@@ -8,9 +8,12 @@ import { Link } from 'react-router-dom';
 
 import AddModal from './AddModal/AddModal';
 
-import DeleteModal from './DeleteModal/DeleteModal';
 
-const AdminGallary = () => {
+import DeleteModal from './DeleteModal/DeleteModal';
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+
+const AdminGallary = (props) => {
 
     const [addModal, setAddModal] = useState(false);
 
@@ -38,8 +41,21 @@ const AdminGallary = () => {
 
         setDeleteModal(prev => !prev)
     }
-
-
+    const fetchData = async () => {
+        props.showLoader();
+        await axios.get("http://localhost:4000/api/gallary/get").then((resp) => {
+            console.log(resp)
+            setData(resp.data.images)
+        }).catch(err => {
+            console.log(err);
+            toast.error(err?.response?.data?.error);
+        }).finally(() => {
+            props.hideLoader();
+        })
+    }
+    useEffect(() => {
+        fetchData()
+    }, [])
     return (
 
         <div className='gallary-admin'>
@@ -49,19 +65,25 @@ const AdminGallary = () => {
             <div className='add-pic-gallary-btn' onClick={setAddModalFunc}>Add</div>
 
 
-            <div className='gallary-home'>
-                <div className='gallary-home-image-block img-admin' onClick={setDeleteModalFunc}>
-                    <img src='https://timess3spore.s3.amazonaws.com/ndata/media/Counsellor/CollegeImage/40dd437a8a4c86a5e6e37a1e7bfc4012desgin%20center.webp' className='gallary-home-image' />
-                </div>
+            {
+                data.map((item) => {
+                    return (
+                        <div className='gallary-home' key={item._id}>
+                            <div className='gallary-home-image-block img-admin' onClick={()=>{setDeleteModalFunc(item)}}>
+                                <img src={item.link} className='gallary-home-image' />
+                            </div>
+
+                        </div>
+                            );
+                })
+            }
 
 
-            </div>
-
-            {addModal && <AddModal onClose={setAddModalFunc} />}
+            { addModal && <AddModal clickedItem={clickedItem} onClose={setAddModalFunc} /> }
 
 
-            {deleteModal && <DeleteModal onClose={setDeleteModalFunc} />}
-
+                    { deleteModal && <DeleteModal clickedItem={clickedItem} onClose={setDeleteModalFunc} /> }
+                    <ToastContainer />
 
         </div>
     )

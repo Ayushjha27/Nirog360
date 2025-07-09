@@ -70,7 +70,7 @@ exports.getHistoryByDate = async(req,res)=>{
 
        const history = await HistoryModel.find({
 
-        createdAt:{$gte: startDate, $1t:endDate}
+        createdAt:{$gte: startDate, $lt:endDate}
 
        }).populate("student").sort({createdAt:-1});
 

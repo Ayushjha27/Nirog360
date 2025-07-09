@@ -19,7 +19,12 @@ const SearchBox = (props) => {
 
     }
   }
-
+  
+  const handleClick = () =>{
+    if(props.handleClick){
+      props.handleClick()
+    }
+  }
 
   return (
 
@@ -33,7 +38,7 @@ const SearchBox = (props) => {
 
      placeholder={placeholder}/>
 
-     <div className='search-btn'>
+     <div className='search-btn' onClick={handleClick}>
 
         <SearchIcon/>
 

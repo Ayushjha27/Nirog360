@@ -49,6 +49,13 @@ const AddModal = (props) => {
 
    }
 
+   const handleSubmit = async () => {
+    await axios.post('http://localhost:4000/api/gallary/add', { link: image }, { withCredentials: true }).then(resp => {
+      window.location.reload();
+    }).catch(err => {
+      console.log(err)
+    })
+  }
 
   return (
 
@@ -84,7 +91,7 @@ const AddModal = (props) => {
 
         {
 
-          image && <div className='cancel-modal-btn'>Submit</div>
+          image && <div className='cancel-modal-btn' onClick={handleSubmit} >Submit</div>
         }
       
       </div>

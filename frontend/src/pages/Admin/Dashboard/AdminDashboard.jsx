@@ -39,7 +39,7 @@ const AdminDashboard = (props) => {
       <div className='welcome-header'>
 
         <div className='welcome-admin'>
-          Welcome To Admin Panel
+          Welcome To  {userInfo?.role === "staff" ? "Staff" : "Admin"}  Panel
         </div>
 
         <div className='welcome-admin-right-side'>

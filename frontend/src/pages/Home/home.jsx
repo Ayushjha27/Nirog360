@@ -109,13 +109,13 @@ const Home = (props) => {
 
        <div className='home-left-page'>
         {
-          userInfo?.role === 'admin' &&
+          userInfo && (userInfo?.role === 'admin' || userInfo?.role=="staff") &&
           <Link to={'/admin/dashboard'} className={`home-left-option`} >
          <DashboardIcon/> Dashboard
         </Link>
         }
         {
-          userInfo?.role === 'student' &&
+         userInfo && userInfo?.role === 'student' &&
           <Link to={`/student/${userInfo._id}`} className={`home-left-option`} >
          <AccountCircleIcon/> Profile
         </Link>

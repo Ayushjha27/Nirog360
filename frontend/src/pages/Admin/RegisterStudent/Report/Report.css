@@ -146,31 +146,33 @@
 }
 
 
-.col-1-rm{
-
-    width: 160px;
-
+.col-1-rm {
+  flex: 2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-
-.col-2-rm{
-
-    width:140px;
-
+.col-2-rm {
+  flex: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.col-3-rm{
-
-    width: 140px;
-
+.col-3-rm {
+  flex: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-
-.col-4-rm{
-
-    width: 50px;
-
+.col-4-rm {
+  flex: 0.5;
+  display: flex;
+  justify-content: center;
 }
+
 
 
 .modal-submit{
@@ -199,4 +201,10 @@
 
     }
     
+}
+.report-form-header,
+.report-form-row {
+  display: flex;
+  width: 100%;
+  gap: 10px;
 }

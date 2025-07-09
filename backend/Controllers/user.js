@@ -314,8 +314,8 @@ exports.updateStudentById = async (req, res) => {
 
             return res.status(200).json({
 
-                message: "Staff Update Successfully"
-
+                message: "Student Update Successfully",
+                updateStudent
             })
 
         }

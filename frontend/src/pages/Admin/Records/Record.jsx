@@ -150,7 +150,7 @@ const Record = () => {
 
       <div className='manageMedicine-card'>
 
-        <div className='report-form-rows'>
+        {/* <div className='report-form-rows'>
 
           <div className='report-form-header'>
 
@@ -191,7 +191,36 @@ const Record = () => {
 
           </div>
 
-        </div>
+        </div> */}
+         
+         <div className='report-form-rows'>
+  {/* Header Row */}
+  <div className='report-form-header'>
+    <div className='col-view'>View</div>
+    <div className='col-1-mng'>Student Name</div>
+    <div className='col-2-mng'>Roll No.</div>
+    <div className='col-3-mng'>Date</div>
+  </div>
+
+  {/* Record Rows */}
+  <div className='report-form-row-block'>
+    {/* Example Record */}
+    <div className='report-form-row'>
+      <div className='col-view' onClick={handleOnOpenModal}>
+        <VisibilityIcon sx={{ cursor: 'pointer' }} />
+      </div>
+      <div className='col-1-mng'>Shruti</div>
+      <div className='col-2-mng'>93</div>
+      <div className='col-3-mng'>12-06-2025</div>
+    </div>
+
+    {/* No Records Message */}
+    <div className='report-form-row no-record'>
+      <div className='no-record-msg'>No Any Records Yet!</div>
+    </div>
+  </div>
+</div>
+
       </div>
 
 

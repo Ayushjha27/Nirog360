@@ -1,8 +1,20 @@
 import React from 'react'
 
 import DeleteIcon from '@mui/icons-material/Delete';
+import axios from 'axios';
 
 const DeleteModal = (props) => {
+
+   const handleDelete=async()=>{
+    if(props.clickedItem){
+      await axios.delete(`http://localhost:4000/api/gallary/delete/${props.clickedItem._id}`,{withCredentials:true}).then((resp)=>{
+        window.location.reload();
+      }).catch(err=>{
+        alert('Something Went Wrong')
+        console.log(err)
+      })
+    }
+  }
 
   return (
 
@@ -16,7 +28,7 @@ const DeleteModal = (props) => {
 
         <div className='cancel-modal-btn' onClick={()=>props.onClose()}>Cancel</div>
 
-         <div className='cancel-modal-btn' onClick={()=>props.onClose()}><DeleteIcon/></div>
+         <div className='cancel-modal-btn'  onClick={handleDelete}><DeleteIcon/></div>
 
 
         </div>
