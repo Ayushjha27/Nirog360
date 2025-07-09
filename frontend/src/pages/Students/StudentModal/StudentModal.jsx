@@ -2,7 +2,7 @@ import React from 'react'
 
 import './StudentModal.css'
 
-const StudentModal = () => {
+const StudentModal = (props) => {
 
   return (
 
@@ -14,7 +14,7 @@ const StudentModal = () => {
 
         <div className='student-modal-detail'>
           <div className='student-modal-header'>
-            14-03-2025
+            {props.selectedHistory.createdAt.slice(0, 10).split("-").reverse().join("-")}
           </div>
 
 
@@ -29,13 +29,19 @@ const StudentModal = () => {
 
 
             <div className='student-modal-body-item'>
+              {
+                props.selectedHistory.medicines.map((item, index) => {
+                  return (
+                    <div className='student-item-modal'>
 
-              <div className='student-item-modal'>
+                      {/* <div>{index + 1}</div> */}
+                      <div>{item?.name}</div>
+                      <div>{item?.requiredQuantity}</div>
+                    </div>
 
-                <div>Paracetalmol</div>
-
-                <div>20</div>
-              </div>
+                  );
+                })
+              }
 
             </div>
 

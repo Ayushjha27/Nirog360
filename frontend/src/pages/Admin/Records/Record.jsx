@@ -16,8 +16,12 @@ import Modal from './../../../components/Modal/Modal';
 
 import RecordModal from './RecordModal/RecordModal';
 
+import axios from 'axios';
 
-const Record = () => {
+import { ToastContainer, toast } from 'react-toastify';
+import StudentAllFiles from './StudentAllDetails/StudentAllFiles';
+
+const Record = (props) => {
 
   const [studentRoll, setStudentRoll] = useState("");
 
@@ -46,7 +50,13 @@ const Record = () => {
 
     setModal(prev => !prev)
   }
-
+  
+  const onOffAllRecordModal = ()=>{
+        if(allRecordModal){
+            setSelecetedAllDetaisl(null)
+        }
+        setAllRecordModal(prev=>!prev)
+    }
 
 
   const onChangeField = (value) => {
@@ -55,7 +65,16 @@ const Record = () => {
   }
 
   const fetchData = async () => {
-
+    props.showLoader();
+    await axios.get(`http://localhost:4000/api/history/get-history?month=${selectedMonth}&year=${selectedYear}`, { withCredentials: true }).then((resp) => {
+      // console.log(resp)
+      setData(resp.data.history)
+    }).catch(err => {
+      console.log(err);
+      toast.error(err?.response?.data?.error);
+    }).finally(() => {
+      props.hideLoader();
+    })
   }
 
 
@@ -98,11 +117,28 @@ const Record = () => {
   }, [])
 
 
-  const handleOnOpenModal = () => {
+  const handleOnOpenModal = (item) => {
 
     setModal(prev => !prev)
+    setSelectedHistory(item?item:null)
   }
 
+  
+ const handleClick = async()=>{
+   if(studentRoll.trim().length === 0) return toast.error("Please Enter Roll No.");
+   props.showLoader();
+   await axios.get(`http://localhost:4000/api/history/get?roll=${studentRoll}`,{withCredentials:true}).then((resp)=>{
+    setAllRecordModal(true)
+     setSelecetedAllDetaisl(resp.data.history)
+    // toast.success(resp.data.message)
+   }).catch(err => {
+      console.log(err);
+      toast.error(err?.response?.data?.error);
+    }).finally(() => {
+      props.hideLoader();
+    })
+
+ }
 
   return (
 
@@ -110,7 +146,7 @@ const Record = () => {
 
       <div className='go-back'><Link to={'/admin/dashboard'}><ArrowBackIcon /> Back To Dashboard</Link></div>
 
-      <SearchBox value={studentRoll} onChange={onChangeField} placeholder="Search By Roll No." />
+      <SearchBox handleClick={handleClick} value={studentRoll} onChange={onChangeField} placeholder="Search By Roll No." />
 
       <div className='record-date-block'>
 
@@ -192,43 +228,57 @@ const Record = () => {
           </div>
 
         </div> */}
-         
-         <div className='report-form-rows'>
-  {/* Header Row */}
-  <div className='report-form-header'>
-    <div className='col-view'>View</div>
-    <div className='col-1-mng'>Student Name</div>
-    <div className='col-2-mng'>Roll No.</div>
-    <div className='col-3-mng'>Date</div>
-  </div>
 
-  {/* Record Rows */}
-  <div className='report-form-row-block'>
-    {/* Example Record */}
-    <div className='report-form-row'>
-      <div className='col-view' onClick={handleOnOpenModal}>
-        <VisibilityIcon sx={{ cursor: 'pointer' }} />
+        <div className='report-form-rows'>
+          {/* Header Row */}
+          <div className='report-form-header'>
+            <div className='col-view'>View</div>
+            <div className='col-1-mng'>Student Name</div>
+            <div className='col-2-mng'>Roll No.</div>
+            <div className='col-3-mng'>Date</div>
+          </div>
+
+          {/* Record Rows */}
+          <div className='report-form-row-block'>
+            {/* Example Record */}
+            {
+              data.map((item, index) => {
+                return (
+                  <div className='report-form-row'>
+                    <div className='col-view' onClick={()=>handleOnOpenModal(item)}>
+                      <VisibilityIcon sx={{ cursor: 'pointer' }} />
+                    </div>
+                    <div className='col-1-mng'>{item?.student?.name} </div>
+                    <div className='col-2-mng'>{item?.student?.roll}</div>
+                    <div className='col-3-mng'>{item.createdAt.slice(0, 10).split("-").reverse().join("-")}</div>
+                  </div>
+                );
+              })
+            }
+
+            {/* No Records Message */}
+            {
+              data.length === 0 &&
+              <div className='report-form-row no-record'>
+                <div className='no-record-msg'>No Any Records Yet!</div>
+              </div>
+
+            }
+          </div>
+        </div>
+
       </div>
-      <div className='col-1-mng'>Shruti</div>
-      <div className='col-2-mng'>93</div>
-      <div className='col-3-mng'>12-06-2025</div>
-    </div>
-
-    {/* No Records Message */}
-    <div className='report-form-row no-record'>
-      <div className='no-record-msg'>No Any Records Yet!</div>
-    </div>
-  </div>
-</div>
-
-      </div>
 
 
+      <ToastContainer/>
       {
-        modal && <Modal header="Records" handleClose={onOffModal} children={<RecordModal />} />
-
+        modal && <Modal header="Records" handleClose={onOffModal} children={<RecordModal  selectedHistory={selectedHistory} />} />
+        
       }
-
+      {
+        allRecordModal && <Modal header="All Records" handleClose={onOffAllRecordModal} children={<StudentAllFiles selectedAllDetails={selectedAllDetails} />  } />
+        
+      }
 
     </div>
   )

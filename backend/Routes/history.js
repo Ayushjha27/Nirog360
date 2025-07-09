@@ -11,7 +11,7 @@ router.post('/add',Authentication.adminFacultyAuth,HistoryController.addHistory)
 
 router.get('/get-history',Authentication.adminFacultyAuth,HistoryController.getHistoryByDate);
 
-router.get('/get',Authentication.adminFacultyAuth,HistoryController.getStudentHistory)
+router.get('/get',Authentication.studentAuth,HistoryController.getStudentHistory)
 
 
 module.exports = router;

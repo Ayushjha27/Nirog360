@@ -3,17 +3,17 @@ import React from 'react'
 import './RecordModal.css'
 
 
-const RecordModal = () => {
-
+const RecordModal = (props) => {
+  console.log(props)
   return (
 
     <div className='record-modal'>
 
       <div className='student-modal-report'>
 
-        <div>Shruti</div>
-        <div>Shruti@gmail.com</div>
-        <div>2023ca93</div>
+        <div>{props.selectedHistory?.student?.name}</div>
+        <div>{props.selectedHistory?.student?.email} </div>
+        <div>{props.selectedHistory.roll} </div>
 
       </div>
 
@@ -23,12 +23,13 @@ const RecordModal = () => {
 
           <div className='student-modal-header'>
 
-            14-03-2025
+            {props.selectedHistory?.createdAt.slice(0, 10).split("-").reverse().join("-")}
           </div>
 
           <div className='student-modal-body-student'>
 
             <div className='student-modal-body-header'>
+              <div>S.no.</div>
 
               <div>Medicine Name</div>
 
@@ -37,11 +38,18 @@ const RecordModal = () => {
 
             <div className='student-modal-body-item'>
 
-              <div className='student-item-modal'>
-                <div>Paracetalmol</div>
-                <div>20</div>
+              {
+                props.selectedHistory?.medicines.map((item,index)=>{
+                 return(
+                  <div className='student-item-modal'>
+                <div>{index+1}</div>
+                <div>{item?.name}</div>
+                <div>{item?.requiredQuantity}</div>
 
               </div>
+                 );
+                })
+              }
 
             </div>
 

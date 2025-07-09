@@ -1,6 +1,6 @@
 import './App.css'
 
-import { Route,Routes } from 'react-router-dom'
+import { Route,Routes,Navigate } from 'react-router-dom'
 
 import Header from './components/Header/Header'
 
@@ -38,6 +38,9 @@ function App() {
   const [loader,setLoader] = useState(false);
 
   const [isLogin,setIsLogin] = useState(localStorage.getItem("isLogin"));
+
+    let role = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")).role : null;
+  let id = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo"))._id : null;
   
   const handleLogin=(value)=>{
 
@@ -69,28 +72,27 @@ function App() {
 
         < Route path='/' element={<Home showLoader={showLoader} hideLoader={hideLoader}/>}/ >
 
-         < Route path='/login' element={<Login handleLogin={handleLogin} showLoader={showLoader} hideLoader={hideLoader}/>}/ >
+         < Route path='/login' element={ isLogin? role==="student"?<Navigate to={`/student/${id}`}/>:<Navigate to={'/admin/dashboard'}/> :<Login handleLogin={handleLogin} showLoader={showLoader} hideLoader={hideLoader}/>}/ >
 
-         < Route path='/login' element={<Login showLoader={showLoader} hideLoader={hideLoader}/>}/ >
 
          < Route path='/stock' element={<Stock showLoader={showLoader} hideLoader={hideLoader}/>}/ >
 
-         < Route path='/admin/dashboard' element={<AdminDashboard showLoader={showLoader} hideLoader={hideLoader}/>}/ >
+         < Route path='/admin/dashboard' element={ isLogin ? (role==="admin" || role==="staff")?<AdminDashboard showLoader={showLoader} hideLoader={hideLoader}/> :<Navigate to="/" />: <Navigate to="/login" />}/ >
 
-         < Route path='/admin/register-student' element={<RegisterStudent showLoader={showLoader} hideLoader={hideLoader}/>}/ >
+         < Route path='/admin/register-student' element={isLogin ? (role==="admin" || role==="staff")?<RegisterStudent showLoader={showLoader} hideLoader={hideLoader}/> :<Navigate to="/" />: <Navigate to="/login" />}/ >
 
-         < Route path='/admin/manage-medicine' element={<ManageMedicine showLoader={showLoader} hideLoader={hideLoader}/>}/ >
+         < Route path='/admin/manage-medicine' element={isLogin ?(role==="admin" || role==="staff")? <ManageMedicine showLoader={showLoader} hideLoader={hideLoader}/> :<Navigate to="/" />: <Navigate to="/login" />}/ >
 
-         < Route path='/admin/record' element={<Record showLoader={showLoader} hideLoader={hideLoader}/>}/ >
+         < Route path='/admin/record' element={isLogin ?(role==="admin" || role==="staff")?  <Record showLoader={showLoader} hideLoader={hideLoader}/> :<Navigate to="/" />: <Navigate to="/login" />}/ >
 
-         < Route path='/admin/facility' element={<Facility showLoader={showLoader} hideLoader={hideLoader}/>}/ >
+         < Route path='/admin/facility' element={isLogin ?(role==="admin" || role==="staff")?  <Facility showLoader={showLoader} hideLoader={hideLoader}/>:<Navigate to="/" />: <Navigate to="/login" />}/ >
 
-         < Route path='/admin/nearByHospital' element={<NearByHospital showLoader={showLoader} hideLoader={hideLoader}/>}/ >
+         < Route path='/admin/nearByHospital' element={isLogin ?(role==="admin" || role==="staff")?  <NearByHospital showLoader={showLoader} hideLoader={hideLoader}/> :<Navigate to="/" />: <Navigate to="/login" />}/ >
 
-         < Route path='/admin/gallary' element={<AdminGallary showLoader={showLoader} hideLoader={hideLoader}/>}/ >
+         < Route path='/admin/gallary' element={isLogin ?(role==="admin" || role==="staff")? <AdminGallary showLoader={showLoader} hideLoader={hideLoader}/> :<Navigate to="/" />: <Navigate to="/login" />}/ >
 
 
-         < Route path='/student/:id' element={<StudentDashboard/>}/ >
+         < Route path='/student/:id' element={isLogin && role === "student" ?<StudentDashboard  showLoader={showLoader} hideLoader={hideLoader} />: <Navigate to="/" />}/ >
 
 
       </Routes>
