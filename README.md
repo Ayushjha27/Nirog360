@@ -1,4 +1,4 @@
-h1 align="center" style="font-size:3rem;">🚑 Nirog360 – Dispensary Management System</h1>
+<h1 align="center" style="font-size:3rem;">🚑 Nirog360 – Dispensary Management System</h1>
 
 <p align="center">
 A full-stack web application to streamline dispensary operations and patient management.<br>
@@ -28,25 +28,24 @@ Secure, scalable, and real-time enabled – designed for modern medical workflow
 - **JWT** – For authentication & role-based access control
 
 ---
+🎥 Demo
+👉 Click here to watch the demo
+Home Page:
+<img width="1907" height="960" alt="image" src="https://github.com/user-attachments/assets/ed105aa8-31bf-4589-a520-bd676fc07e36" />
+<img width="1918" height="952" alt="image" src="https://github.com/user-attachments/assets/0bda77ea-b3cd-47a4-9cbc-4a9b074435e6" />
+Login Page:
+<img width="1900" height="981" alt="image" src="https://github.com/user-attachments/assets/6440595d-3b31-446d-af9c-491560a35cfb" />
+Admin Dashboard:
+<img width="1917" height="975" alt="image" src="https://github.com/user-attachments/assets/83d5df20-29e3-4198-9f4a-278a11fcfdde" />
+
+
+
 
 ## 📁 Project Structure
 
-Nirog360/
-├── client/ # Frontend (React.js)
-│ ├── public/
-│ └── src/
-│ ├── components/ # Reusable UI components
-│ ├── pages/ # Login, dashboard, appointment etc.
-│ ├── utils/ # API, JWT functions
-│ └── App.js # Main component
-│
-└── server/ # Backend (Node.js + Express)
-├── controllers/ # Business logic
-├── models/ # MongoDB schemas
-├── routes/ # API routes
-├── middlewares/ # Auth and validation
-├── utils/ # JWT & email utility
-└── server.js # Main server file
+
+<img width="548" height="562" alt="image" src="https://github.com/user-attachments/assets/46b21a4c-5592-4745-a07d-b00fe3d68116" />
+
 
 yaml
 Copy
@@ -127,11 +126,13 @@ Dockerized deployment
 
  Cloud hosting (Render/Heroku/Vercel)
 
-🎥 Demo
-👉 Click here to watch the demo <>
+
+
+
+
 
 👨‍💻 Author
-Made with 💡 by Shruti Sahu
+Made with 💡 by Shruti Sahu and Ayush Jha
 
 
 📄 License
