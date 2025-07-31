@@ -94,11 +94,6 @@ Admin Dashboard:
 └── server.js                     # Entry point
 </code>
 
-
-yaml
-Copy
-Edit
-
 ---
 
 ## 🚀 Getting Started
@@ -120,75 +115,51 @@ git clone https://github.com/Ayushjha27/Nirog360.git
 cd Nirog360
 Install dependencies
 
-bash
-Copy
-Edit
+
 # Frontend
-cd client
+cd frontend
 npm install
 
 # Backend
-cd ../server
+cd ../backend
 npm install
 Setup environment variables
 
 Create a .env file in the /server folder with:
-
-env
-Copy
-Edit
 PORT = Your Port
 EMAIL_PASSWORD = "Your Password"
 EMAIL= "Your Email"
 
-bash
-Copy
-Edit
-# In /server
+
+# In /backend
 npm start
 
-# In /client (in another terminal)
+# In /frontend (in another terminal)
 npm run dev
 ✨ Features
 👨‍⚕️  Role-based access system
 🔐 Secure login & registration with JWT
 
 👨‍⚕️ Role-based dashboards for doctors and staff
-
 🧾Admin analytics dashboard
-
 🧾 Patient record management
-
 💊 Medicine inventory tracking
-
 📧 Email notifications for appointments and alerts
 
-🔄 Real-time data updates via REST APIs
 
+🔄 Real-time data updates via REST APIs
 🎯 Roadmap
 Core functionalities: login, appointments, inventory
-
 PDF generation for prescriptions
-
 Dockerized deployment
-
- Cloud hosting (Render/Heroku/Vercel)
-
-
-
-
+Cloud hosting (Render/Heroku/Vercel)
 
 
 👨‍💻 Author
 Made with 💡 by Shruti Sahu and Ayush Jha
 
-
 📄 License
 This project is licensed under the MIT License.
-
-markdown
-Copy
-Edit
 
 ---
 
