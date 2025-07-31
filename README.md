@@ -44,8 +44,55 @@ Admin Dashboard:
 
 ## 📁 Project Structure
 
-
-<img width="548" height="562" alt="image" src="https://github.com/user-attachments/assets/46b21a4c-5592-4745-a07d-b00fe3d68116" />
+<code>```
+ ` 📦 dispensary-management-system/
+│
+├── 📁 config/
+│   └── db.js                     # MongoDB connection
+│
+├── 📁 controllers/
+│   ├── authController.js
+│   ├── userController.js
+│   ├── historyController.js
+│   ├── medicineController.js
+│   ├── facilityController.js
+│   ├── notificationController.js
+│   ├── hospitalController.js
+│   └── galleryController.js
+│
+├── 📁 models/
+│   ├── User.js
+│   ├── History.js
+│   ├── Medicine.js
+│   ├── Facility.js
+│   ├── Notification.js
+│   ├── NearByHospital.js
+│   └── Gallery.js
+│
+├── 📁 routes/
+│   ├── authRoutes.js
+│   ├── userRoutes.js
+│   ├── historyRoutes.js
+│   ├── medicineRoutes.js
+│   ├── facilityRoutes.js
+│   ├── notificationRoutes.js
+│   ├── hospitalRoutes.js
+│   └── galleryRoutes.js
+│
+├── 📁 middlewares/
+│   └── authMiddleware.js         # For protected routes
+│
+├── 📁 utils/
+│   └── helpers.js                # Utility functions
+│
+├── 📁 uploads/                   # For storing gallery images
+│
+├── .env                          # Environment variables
+├── .gitignore
+├── package.json
+├── README.md
+└── server.js                     # Entry point
+</code>
 
 
 yaml
