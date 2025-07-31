@@ -29,7 +29,7 @@ Secure, scalable, and real-time enabled – designed for modern medical workflow
 
 ---
 🎥 Demo
-👉 👉 [Click here to watch the demo](https://drive.google.com/file/d/1XkwZez7a0Ed3kXPHX8zCe-nxF0HdHcjF/view?usp=sharing)
+👉 👉 [Click here to watch the demo](https://drive.google.com/file/d/1Aqeykbhh0JDbHps5bX86bBM02aU0TJYw/view?usp=sharing)
 
 Home Page:
 <img width="1907" height="960" alt="image" src="https://github.com/user-attachments/assets/ed105aa8-31bf-4589-a520-bd676fc07e36" />
