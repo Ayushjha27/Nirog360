@@ -163,10 +163,4 @@ This project is licensed under the MIT License.
 
 ---
 
-### ✅ What’s Updated:
 
-- Title made larger using HTML tags (`<h1>`) for emphasis in GitHub rendering.
-- Consistent section formatting with clear spacing and emphasis.
-- All features, tech, and steps detailed in **clean sections**.
-- Placeholder for **demo video link**.
-- Attribution to **you as author**.
